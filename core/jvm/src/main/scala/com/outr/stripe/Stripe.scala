@@ -25,6 +25,7 @@ class Stripe(val apiKey: String) extends Restful {
   lazy val prices: PricesSupport = new PricesSupport(this)
   lazy val products: ProductsSupport = new ProductsSupport(this)
   lazy val subscriptions: SubscriptionsSupport = new SubscriptionsSupport(this)
+  lazy val subscriptionItems: SubscriptionItemsSupport = new SubscriptionItemsSupport(this)
 }
 
 object Stripe {
