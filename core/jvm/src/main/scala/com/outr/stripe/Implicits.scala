@@ -10,7 +10,7 @@ import com.outr.stripe.price.{Price, Recurring, Tier, TransformQuantity}
 import com.outr.stripe.product.PackageDimensions
 import com.outr.stripe.product.{Product => StripeProduct}
 import com.outr.stripe.refund.Refund
-import com.outr.stripe.subscription.{Coupon, Invoice, InvoiceItem, InvoiceLine, Plan, Subscription, SubscriptionItem}
+import com.outr.stripe.subscription.{Coupon, CreateSubscriptionItem, Invoice, InvoiceItem, InvoiceLine, Plan, Subscription, SubscriptionItem}
 import com.outr.stripe.token.Token
 import com.outr.stripe.transfer.{SourcedTransfers, Transfer, TransferReversal}
 import io.circe.Decoder.Result
@@ -344,8 +344,8 @@ trait Implicits {
       write(s"$key[round]", value.round)
     ).flatten.toMap
   }
-  protected implicit val subscriptionItemsEncoder: MapEncoder[List[SubscriptionItem]] = new MapEncoder[List[SubscriptionItem]] {
-    override def encode(key: String, value: List[SubscriptionItem]): Map[String, String] = value.zipWithIndex.flatMap {
+  protected implicit val createSubscriptionItemsEncoder: MapEncoder[List[CreateSubscriptionItem]] = new MapEncoder[List[CreateSubscriptionItem]] {
+    override def encode(key: String, value: List[CreateSubscriptionItem]): Map[String, String] = value.zipWithIndex.flatMap {
       case (si, index) => List(
         write(s"$key[$index][price]", si.price),
         write(s"$key[$index][quantity]", si.quantity),
