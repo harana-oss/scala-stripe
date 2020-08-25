@@ -1,5 +1,6 @@
 package com.outr.stripe.subscription
 
+import com.outr.stripe.StripeList
 import com.outr.stripe.customer.Discount
 
 case class Subscription(id: String,
@@ -13,6 +14,7 @@ case class Subscription(id: String,
                         customer: String,
                         discount: Option[Discount],
                         endedAt: Option[Long],
+                        items: StripeList[SubscriptionItem],
                         livemode: Boolean,
                         metadata: Map[String, String],
                         plan: Plan,
