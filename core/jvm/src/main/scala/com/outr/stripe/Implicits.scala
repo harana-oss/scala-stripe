@@ -319,7 +319,6 @@ trait Implicits {
       write(s"$key[width]", value.width)
      ).flatten.toMap
   }
-<<<<<<< HEAD
   protected implicit val recurringEncoder: MapEncoder[Recurring] = new MapEncoder[Recurring] {
     override def encode(key: String, value: Recurring): Map[String, String] = List(
       write(s"$key[interval]", value.interval),
