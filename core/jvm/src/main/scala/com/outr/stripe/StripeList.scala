@@ -1,3 +1,3 @@
 package com.outr.stripe
 
-case class StripeList[T](`object`: String, url: String, hasMore: Boolean, data: List[T])
+case class StripeList[T](`object`: String, url: String, hasMore: Boolean, data: List[T], totalCount: Int)
