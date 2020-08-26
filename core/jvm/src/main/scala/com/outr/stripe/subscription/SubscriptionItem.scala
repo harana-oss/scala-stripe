@@ -4,7 +4,7 @@ import com.outr.stripe.price.Price
 
 case class SubscriptionItem(id: String,
                             `object`: String,
-                            billingThresholds: Map[String, String],
+                            billingThresholds: Option[BillingThresholds],
                             created: Long,
                             metadata: Map[String, String],
                             paymentBehavior: Option[String],
