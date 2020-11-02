@@ -2,8 +2,13 @@ import sbtcrossproject.CrossPlugin.autoImport.crossProject
 
 name := "scala-stripe"
 organization in ThisBuild := "com.outr"
+<<<<<<< HEAD
 version in ThisBuild := "1.1.29"
 scalaVersion in ThisBuild := "2.12.12"
+=======
+version in ThisBuild := "1.1.12-SNAPSHOT"
+scalaVersion in ThisBuild := "2.13.3"
+>>>>>>> 33b26b3 (Updates and dependency upgrades)
 crossScalaVersions in ThisBuild := List("2.13.3", "2.12.12")
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")
 resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
@@ -24,7 +29,7 @@ developers in ThisBuild := List(
   Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
 )
 
-val youiVersion = "0.13.16"
+val youiVersion = "0.13.17"
 
 lazy val root = project.in(file("."))
   .aggregate(coreJS, coreJVM)
@@ -36,8 +41,13 @@ lazy val root = project.in(file("."))
 lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
   .settings(
     name := "scala-stripe",
-    libraryDependencies += "org.scalactic" %%% "scalactic" % "3.2.1",
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.1" % "test"
+    libraryDependencies ++= Seq(
+      "org.scalactic" %%% "scalactic" % "3.2.2",
+      "org.scalatest" %%% "scalatest" % "3.2.2" % "test",
+      "org.scalatest" %% "scalatest-wordspec" % "3.2.2" % "test",
+      "org.scalatest" %%% "scalatest-matchers-core" % "3.2.2" % "test",
+      "com.outr" %%% "profig" % "3.0.4" % "test"
+    )
   )
   .jvmSettings(
     fork := true,
