@@ -7,7 +7,7 @@ import profig.Profig
 
 object TestStripe {
   private lazy val stripe: Stripe = {
-    Profig.initConfigurationBlocking(startPath = Paths.get("../.."))
+    Profig.initConfiguration(startPath = Paths.get("../.."))
     val p = Profig("stripe.apiKey")
     val apiKey = if (p.exists()) {
       p.as[String]
