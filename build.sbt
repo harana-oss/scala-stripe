@@ -2,34 +2,27 @@ import sbtcrossproject.CrossPlugin.autoImport.crossProject
 
 name := "scala-stripe"
 organization in ThisBuild := "com.outr"
-<<<<<<< HEAD
-version in ThisBuild := "1.1.29"
-scalaVersion in ThisBuild := "2.12.12"
-=======
-version in ThisBuild := "1.1.12-SNAPSHOT"
-scalaVersion in ThisBuild := "2.13.3"
->>>>>>> 33b26b3 (Updates and dependency upgrades)
-crossScalaVersions in ThisBuild := List("2.13.3", "2.12.12")
+version in ThisBuild := "1.1.30"
+scalaVersion in ThisBuild := "2.13.8"
+crossScalaVersions in ThisBuild := List("2.13.8", "2.12.16")
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")
 resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
 
 publishTo in ThisBuild := sonatypePublishTo.value
 sonatypeProfileName in ThisBuild := "com.outr"
 publishMavenStyle in ThisBuild := true
-licenses in ThisBuild := Seq("MIT" -> url("https://github.com/outr/scala-stripe/blob/master/LICENSE"))
+licenses in ThisBuild := Seq("MIT" -> url("https://github.com/harana-oss/scala-stripe/blob/master/LICENSE"))
 sonatypeProjectHosting in ThisBuild := Some(xerial.sbt.Sonatype.GitHubHosting("outr", "scala-stripe", "matt@outr.com"))
-homepage in ThisBuild := Some(url("https://github.com/outr/scala-stripe"))
+homepage in ThisBuild := Some(url("https://github.com/harana-oss/scala-stripe"))
 scmInfo in ThisBuild := Some(
   ScmInfo(
-    url("https://github.com/outr/scala-stripe"),
-    "scm:git@github.com:outr/scala-stripe.git"
+    url("https://github.com/harana-oss/scala-stripe"),
+    "scm:git@github.com:harana-oss/scala-stripe.git"
   )
 )
 developers in ThisBuild := List(
   Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
 )
-
-val youiVersion = "0.13.17"
 
 lazy val root = project.in(file("."))
   .aggregate(coreJS, coreJVM)
@@ -52,12 +45,12 @@ lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
   .jvmSettings(
     fork := true,
     libraryDependencies ++= Seq(
-      "io.youi" %% "youi-client" % youiVersion
+      "io.youi" %% "youi-client" % "0.14.4"
     )
   )
   .jsSettings(
     jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "1.1.0"
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.3.0"
   )
 
 lazy val coreJS = core.js
