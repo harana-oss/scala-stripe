@@ -4,8 +4,8 @@ val commonSettings = Seq(
   name := "scala-stripe",
   organization := "com.outr",
   version := "1.1.30",
-  scalaVersion := "2.13.8",
-  crossScalaVersions := List("2.13.8", "2.12.16"),
+  scalaVersion := "2.13.14",
+  crossScalaVersions := List("2.13.14", "2.12.16"),
   scalacOptions ++= Seq("-unchecked", "-deprecation"),
   resolvers += Resolver.sonatypeRepo("releases"),
 
@@ -37,13 +37,13 @@ lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
   .settings(
     commonSettings,
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core" % "0.14.2",
-      "io.circe" %%% "circe-generic" % "0.14.2",
-      "io.circe" %%% "circe-parser" % "0.14.2",
-      "org.scalactic" %%% "scalactic" % "3.2.2",
-      "org.scalatest" %%% "scalatest" % "3.2.2" % "test",
-      "org.scalatest" %% "scalatest-wordspec" % "3.2.2" % "test",
-      "org.scalatest" %%% "scalatest-matchers-core" % "3.2.2" % "test",
+      "io.circe" %%% "circe-core" % "0.14.9",
+      "io.circe" %%% "circe-generic" % "0.14.9",
+      "io.circe" %%% "circe-parser" % "0.14.9",
+      "org.scalactic" %%% "scalactic" % "3.2.19",
+      "org.scalatest" %%% "scalatest" % "3.2.19" % "test",
+      "org.scalatest" %% "scalatest-wordspec" % "3.2.19" % "test",
+      "org.scalatest" %%% "scalatest-matchers-core" % "3.2.19" % "test",
       "com.outr" %%% "profig" % "3.0.4" % "test"
     )
   )
@@ -57,7 +57,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
   .jsSettings(
     commonSettings,
     jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.3.0"
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.8.0"
   )
 
 lazy val coreJS = core.js
