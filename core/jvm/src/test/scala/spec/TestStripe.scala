@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object TestStripe {
   private lazy val stripe: Stripe = {
-    Profig.initConfiguration(startPath = Paths.get("../.."))
+    Profig.initConfigurationBlocking(startPath = Paths.get("../.."))
     val p = Profig("stripe.apiKey")
     val apiKey = if (p.exists()) {
       p.as[String]

@@ -24,6 +24,9 @@ val commonSettings = Seq(
     Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
   )
 )
+developers in ThisBuild := List(
+  Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
+)
 
 lazy val root = project.in(file("."))
   .aggregate(coreJS, coreJVM)

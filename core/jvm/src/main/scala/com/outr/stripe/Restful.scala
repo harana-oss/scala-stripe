@@ -74,7 +74,10 @@ trait Restful extends Implicits {
       if (response.code == StatusCode.Ok)
         Right(Pickler.read[R](response.body.toOption.get))
       else {
-        val error = if (response.body.isLeft) response.body.left.get else response.body.right.get
+        val error = response.body match {
+          case Left(l) => l
+          case Right(r) => r
+        }
         val wrapper = Pickler.read[ErrorMessageWrapper](error)
         Left(ResponseError(response.statusText, response.code.code, wrapper.error))
       }
