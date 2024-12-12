@@ -1,9 +1,10 @@
 package spec
 
 import java.nio.file.Paths
-
 import com.outr.stripe.Stripe
 import profig.Profig
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object TestStripe {
   private lazy val stripe: Stripe = {

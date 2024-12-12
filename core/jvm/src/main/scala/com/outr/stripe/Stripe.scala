@@ -1,10 +1,11 @@
 package com.outr.stripe
 
 import com.outr.stripe.support._
-import io.youi.net._
+import sttp.model.Uri
 
 class Stripe(val apiKey: String) extends Restful {
-  override protected def url(endPoint: String): URL = URL(s"https://api.stripe.com/v1/$endPoint")
+
+  override protected def url(endPoint: String): Uri = Uri.parse(s"https://api.stripe.com/v1/$endPoint").toOption.get
 
   lazy val balance: BalanceSupport = new BalanceSupport(this)
   lazy val charges: ChargesSupport = new ChargesSupport(this)

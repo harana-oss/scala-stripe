@@ -4,8 +4,7 @@ val commonSettings = Seq(
   name := "scala-stripe",
   organization := "com.outr",
   version := "1.1.30",
-  scalaVersion := "2.13.14",
-  crossScalaVersions := List("2.13.14", "2.12.16"),
+  scalaVersion := "2.13.15",
   scalacOptions ++= Seq("-unchecked", "-deprecation"),
   resolvers += Resolver.sonatypeRepo("releases"),
 
@@ -37,9 +36,9 @@ lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
   .settings(
     commonSettings,
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core" % "0.14.9",
-      "io.circe" %%% "circe-generic" % "0.14.9",
-      "io.circe" %%% "circe-parser" % "0.14.9",
+      "io.circe" %%% "circe-core" % "0.14.10",
+      "io.circe" %%% "circe-generic" % "0.14.10",
+      "io.circe" %%% "circe-parser" % "0.14.10",
       "org.scalactic" %%% "scalactic" % "3.2.19",
       "org.scalatest" %%% "scalatest" % "3.2.19" % "test",
       "org.scalatest" %% "scalatest-wordspec" % "3.2.19" % "test",
@@ -51,7 +50,8 @@ lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
     commonSettings,
     fork := true,
     libraryDependencies ++= Seq(
-      "io.youi" %% "youi-client" % "0.14.4"
+      "com.softwaremill.sttp.client3" %% "core" % "3.10.1",
+      "com.softwaremill.sttp.client3" %% "circe" % "3.10.1"
     )
   )
   .jsSettings(
