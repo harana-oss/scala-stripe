@@ -26,7 +26,7 @@ class SubscriptionItemsSupport(stripe: Stripe) extends Implicits {
       write("quantity", quantity),
       write("tax_rates", taxRates)
     ).flatten
-    stripe.post[SubscriptionItem]("subscription_items", QueryConfig.default, data: _*)
+    stripe.post[SubscriptionItem]("subscription_items", QueryConfig.default, data*)
   }
 
   def byId(subscriptionItemId: String): Future[Either[ResponseError, SubscriptionItem]] = {
@@ -54,7 +54,7 @@ class SubscriptionItemsSupport(stripe: Stripe) extends Implicits {
       write("quantity", quantity),
       write("tax_rates", taxRates)
     ).flatten
-    stripe.post[SubscriptionItem](s"subscription_items/$subscriptionItemId", QueryConfig.default, data: _*)
+    stripe.post[SubscriptionItem](s"subscription_items/$subscriptionItemId", QueryConfig.default, data*)
   }
 
   def delete(subscriptionItemId: String): Future[Either[ResponseError, Deleted]] = {
@@ -66,6 +66,6 @@ class SubscriptionItemsSupport(stripe: Stripe) extends Implicits {
     val data = List(
       write("subscription", subscription)
     ).flatten
-    stripe.get[StripeList[SubscriptionItem]]("subscription_items", config, data: _*)
+    stripe.get[StripeList[SubscriptionItem]]("subscription_items", config, data*)
   }
 }

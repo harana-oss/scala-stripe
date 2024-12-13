@@ -17,7 +17,7 @@ class ExternalBankAccountsSupport(stripe: Stripe) extends Implicits {
       write("default_for_currency", defaultForCurrency),
       write("metadata", metadata)
     ).flatten
-    stripe.post[BankAccount](s"accounts/$accountId/external_accounts", QueryConfig.default, data: _*)
+    stripe.post[BankAccount](s"accounts/$accountId/external_accounts", QueryConfig.default, data*)
   }
 
   def byId(accountId: String, bankAccountId: String): Future[Either[ResponseError, BankAccount]] = {
@@ -32,7 +32,7 @@ class ExternalBankAccountsSupport(stripe: Stripe) extends Implicits {
       write("default_for_currency", defaultForCurrency),
       write("metadata", metadata)
     ).flatten
-    stripe.post[BankAccount](s"accounts/$accountId/external_accounts/$bankAccountId", QueryConfig.default, data: _*)
+    stripe.post[BankAccount](s"accounts/$accountId/external_accounts/$bankAccountId", QueryConfig.default, data*)
   }
 
   def delete(accountId: String, bankAccountId: String): Future[Either[ResponseError, Deleted]] = {

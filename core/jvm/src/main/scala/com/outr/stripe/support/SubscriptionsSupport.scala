@@ -30,7 +30,7 @@ class SubscriptionsSupport(stripe: Stripe) extends Implicits {
       write("trial_end", trialEnd),
       write("trial_period_days", trialPeriodDays)
     ).flatten
-    stripe.post[Subscription]("subscriptions", QueryConfig.default, data: _*)
+    stripe.post[Subscription]("subscriptions", QueryConfig.default, data*)
   }
 
   def byId(subscriptionId: String): Future[Either[ResponseError, Subscription]] = {
@@ -61,7 +61,7 @@ class SubscriptionsSupport(stripe: Stripe) extends Implicits {
       write("trial_end", trialEnd),
       write("trial_period_days", trialPeriodDays)
     ).flatten
-    stripe.post[Subscription](s"subscriptions/$subscriptionId", QueryConfig.default, data: _*)
+    stripe.post[Subscription](s"subscriptions/$subscriptionId", QueryConfig.default, data*)
   }
 
   def cancel(customerId: String,
@@ -81,6 +81,6 @@ class SubscriptionsSupport(stripe: Stripe) extends Implicits {
       write("plan", plan),
       write("status", status)
     ).flatten
-    stripe.get[StripeList[Subscription]]("subscriptions", config, data: _*)
+    stripe.get[StripeList[Subscription]]("subscriptions", config, data*)
   }
 }

@@ -17,7 +17,7 @@ class ExternalCreditCardsSupport(stripe: Stripe) extends Implicits {
       write("default_for_currency", defaultForCurrency),
       write("metadata", metadata)
     ).flatten
-    stripe.post[Card](s"accounts/$accountId/external_accounts", QueryConfig.default, data: _*)
+    stripe.post[Card](s"accounts/$accountId/external_accounts", QueryConfig.default, data*)
   }
 
   def byId(accountId: String, cardId: String): Future[Either[ResponseError, Card]] = {
@@ -50,7 +50,7 @@ class ExternalCreditCardsSupport(stripe: Stripe) extends Implicits {
       write("metadata", metadata),
       write("name", name)
     ).flatten
-    stripe.post[Card](s"accounts/$accountId/external_accounts/$cardId", QueryConfig.default, data: _*)
+    stripe.post[Card](s"accounts/$accountId/external_accounts/$cardId", QueryConfig.default, data*)
   }
 
   def delete(accountId: String, cardId: String): Future[Either[ResponseError, Deleted]] = {

@@ -17,7 +17,7 @@ class DisputesSupport(stripe: Stripe) extends Implicits {
       write("evidence", evidence),
       write("metadata", metadata)
     ).flatten
-    stripe.post[Dispute](s"disputes/$disputeId", QueryConfig.default, data: _*)
+    stripe.post[Dispute](s"disputes/$disputeId", QueryConfig.default, data*)
   }
 
   def close(disputeId: String): Future[Either[ResponseError, Dispute]] = {
@@ -29,6 +29,6 @@ class DisputesSupport(stripe: Stripe) extends Implicits {
     val data = List(
       write("created", created)
     ).flatten
-    stripe.get[StripeList[Dispute]]("disputes", config, data: _*)
+    stripe.get[StripeList[Dispute]]("disputes", config, data*)
   }
 }

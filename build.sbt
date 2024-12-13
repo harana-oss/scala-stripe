@@ -3,9 +3,9 @@ import sbtcrossproject.CrossPlugin.autoImport.crossProject
 val commonSettings = Seq(
   name := "scala-stripe",
   organization := "com.outr",
-  version := "1.1.30",
-  scalaVersion := "2.13.15",
-  scalacOptions ++= Seq("-unchecked", "-deprecation"),
+  version := "1.1.31",
+  scalaVersion := "3.6.2",
+  scalacOptions ++= Seq("-Xmax-inlines", "128"),
   resolvers += Resolver.sonatypeRepo("releases"),
 
   publishTo := sonatypePublishTo.value,
@@ -46,7 +46,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
       "org.scalatest" %%% "scalatest" % "3.2.19" % "test",
       "org.scalatest" %% "scalatest-wordspec" % "3.2.19" % "test",
       "org.scalatest" %%% "scalatest-matchers-core" % "3.2.19" % "test",
-      "com.outr" %%% "profig" % "3.0.4" % "test"
+      "com.outr" %%% "profig" % "3.4.16" % "test"
     )
   )
   .jvmSettings(

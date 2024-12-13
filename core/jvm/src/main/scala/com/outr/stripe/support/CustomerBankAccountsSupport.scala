@@ -15,7 +15,7 @@ class CustomerBankAccountsSupport(stripe: Stripe) extends Implicits {
       write("default_for_currency", defaultForCurrency),
       write("metadata", metadata)
     ).flatten
-    stripe.post[BankAccount](s"customers/$customerId/sources", QueryConfig.default, data: _*)
+    stripe.post[BankAccount](s"customers/$customerId/sources", QueryConfig.default, data*)
   }
 
   def byId(customerId: String, bankAccountId: String): Future[Either[ResponseError, BankAccount]] = {
@@ -32,7 +32,7 @@ class CustomerBankAccountsSupport(stripe: Stripe) extends Implicits {
       write("account_holder_type", accountHolderType),
       write("metadata", metadata)
     ).flatten
-    stripe.post[BankAccount](s"customers/$customerId/sources/$bankAccountId", QueryConfig.default, data: _*)
+    stripe.post[BankAccount](s"customers/$customerId/sources/$bankAccountId", QueryConfig.default, data*)
   }
 
   def verify(customerId: String,
@@ -45,7 +45,7 @@ class CustomerBankAccountsSupport(stripe: Stripe) extends Implicits {
       amount2.map("amounts[]" -> _.pennies.toString),
       verificationMethod.map("verification_method" -> _)
     ).flatten
-    stripe.post[BankAccount](s"customers/$customerId/sources/$bankAccountId/verify", QueryConfig.default, data: _*)
+    stripe.post[BankAccount](s"customers/$customerId/sources/$bankAccountId/verify", QueryConfig.default, data*)
   }
 
   def delete(customerId: String, bankAccountId: String): Future[Either[ResponseError, Deleted]] = {

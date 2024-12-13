@@ -7,6 +7,7 @@ import sttp.model.{Header, HeaderNames, Method, StatusCode, Uri}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.reflect.ClassTag
 
 trait Restful extends Implicits {
 
@@ -19,21 +20,21 @@ trait Restful extends Implicits {
   private[stripe] def get[R](endPoint: String,
                              config: QueryConfig,
                              data: (String, String)*)
-                            (implicit decoder: Decoder[R], manifest: Manifest[R]): Future[Either[ResponseError, R]] = {
+                            (implicit decoder: Decoder[R], classTag: ClassTag[R]): Future[Either[ResponseError, R]] = {
     process[R](Method.GET, endPoint = endPoint, config = config, data = data)
   }
 
   private[stripe] def post[R](endPoint: String,
                               config: QueryConfig,
                               data: (String, String)*)
-                             (implicit decoder: Decoder[R], manifest: Manifest[R]): Future[Either[ResponseError, R]] = {
+                             (implicit decoder: Decoder[R], classTag: ClassTag[R]): Future[Either[ResponseError, R]] = {
     process[R](Method.POST, endPoint = endPoint, config = config, data = data)
   }
 
   private[stripe] def delete[R](endPoint: String,
                                 config: QueryConfig,
                                 data: (String, String)*)
-                               (implicit decoder: Decoder[R], manifest: Manifest[R]): Future[Either[ResponseError, R]] = {
+                               (implicit decoder: Decoder[R], classTag: ClassTag[R]): Future[Either[ResponseError, R]] = {
     process[R](Method.DELETE, endPoint = endPoint, config = config, data = data)
   }
 
@@ -41,19 +42,19 @@ trait Restful extends Implicits {
                                  endPoint: String,
                                  config: QueryConfig,
                                  data: Seq[(String, String)])
-                                (implicit decoder: Decoder[R], manifest: Manifest[R]): Future[Either[ResponseError, R]] = {
+                                (implicit decoder: Decoder[R], classTag: ClassTag[R]): Future[Either[ResponseError, R]] = {
 
     val headers = List(
       Header("Stripe-Version", Stripe.Version),
       Header(HeaderNames.Authorization, s"Bearer $apiKey")
     ) ++ config.idempotencyKey.map(key => Header("Idempotency-Key", key))
 
-    val queryParams = data.toList ++ {
-      if (config.limit != QueryConfig.default.limit) List("limit" -> config.limit.toString)
+    val queryParams = data ++ {
+      if (config.limit != QueryConfig.default.limit) Seq("limit" -> config.limit.toString)
       else Nil
     } ++ {
-      config.startingAfter.map("starting_after" -> _).toList ++
-        config.endingBefore.map("ending_before" -> _).toList
+      config.startingAfter.map("starting_after" -> _).toSeq ++
+        config.endingBefore.map("ending_before" -> _).toSeq
     }
 
     val baseUri = this.url(endPoint)
@@ -61,13 +62,13 @@ trait Restful extends Implicits {
     val request = method match {
       case Method.POST =>
         basicRequest
-          .headers(headers: _*)
+          .headers(headers*)
           .body(queryParams)
           .post(baseUri)
       case _ =>
         basicRequest
-          .headers(headers: _*)
-          .method(method, baseUri.addParams(queryParams: _*))
+          .headers(headers*)
+          .method(method, baseUri.addParams(queryParams*))
     }
 
     request.send(backend).map(response => {

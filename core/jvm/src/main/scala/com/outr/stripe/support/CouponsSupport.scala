@@ -26,7 +26,7 @@ class CouponsSupport(stripe: Stripe) extends Implicits {
       write("percent_off", percentOff),
       write("redeem_by", redeemBy)
     ).flatten
-    stripe.post[Coupon]("coupons", QueryConfig.default, data: _*)
+    stripe.post[Coupon]("coupons", QueryConfig.default, data*)
   }
 
   def byId(couponId: String): Future[Either[ResponseError, Coupon]] = {
@@ -37,7 +37,7 @@ class CouponsSupport(stripe: Stripe) extends Implicits {
     val data = List(
       write("metadata", metadata)
     ).flatten
-    stripe.post[Coupon](s"coupons/$couponId", QueryConfig.default, data: _*)
+    stripe.post[Coupon](s"coupons/$couponId", QueryConfig.default, data*)
   }
 
   def delete(couponId: String): Future[Either[ResponseError, Deleted]] = {
@@ -49,6 +49,6 @@ class CouponsSupport(stripe: Stripe) extends Implicits {
     val data = List(
       write("created", created)
     ).flatten
-    stripe.get[StripeList[Coupon]]("coupons", config, data: _*)
+    stripe.get[StripeList[Coupon]]("coupons", config, data*)
   }
 }

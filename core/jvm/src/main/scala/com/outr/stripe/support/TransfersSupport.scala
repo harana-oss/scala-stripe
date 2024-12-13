@@ -28,7 +28,7 @@ class TransfersSupport(stripe: Stripe) extends Implicits {
       write("source_type", if (sourceType != "card") Some(sourceType) else None),
       write("method", if (method != "standard") Some(method) else None)
     ).flatten
-    stripe.post[Transfer]("transfers", QueryConfig.default, data: _*)
+    stripe.post[Transfer]("transfers", QueryConfig.default, data*)
   }
 
   def byId(transferId: String): Future[Either[ResponseError, Transfer]] = {
@@ -42,7 +42,7 @@ class TransfersSupport(stripe: Stripe) extends Implicits {
       write("description", description),
       write("metadata", metadata)
     ).flatten
-    stripe.post[Transfer](s"transfers/$transferId", QueryConfig.default, data: _*)
+    stripe.post[Transfer](s"transfers/$transferId", QueryConfig.default, data*)
   }
 
   def list(created: Option[TimestampFilter] = None,
@@ -58,7 +58,7 @@ class TransfersSupport(stripe: Stripe) extends Implicits {
       write("recipient", recipient),
       write("status", status)
     ).flatten
-    stripe.get[StripeList[Transfer]]("transfers", config, data: _*)
+    stripe.get[StripeList[Transfer]]("transfers", config, data*)
   }
 
   lazy val reversals: TransferReversalsSupport = new TransferReversalsSupport(stripe)

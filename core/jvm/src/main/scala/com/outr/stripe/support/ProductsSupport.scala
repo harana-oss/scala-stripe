@@ -40,7 +40,7 @@ class ProductsSupport(stripe: Stripe) extends Implicits {
       write("unit_label", unitLabel),
       write("url", url),
     ).flatten
-    stripe.post[StripeProduct]("products", QueryConfig.default, data: _*)
+    stripe.post[StripeProduct]("products", QueryConfig.default, data*)
   }
 
   def byId(productId: String): Future[Either[ResponseError, StripeProduct]] = {
@@ -81,7 +81,7 @@ class ProductsSupport(stripe: Stripe) extends Implicits {
       write("unit_label", unitLabel),
       write("url", url)
     ).flatten
-    stripe.post[StripeProduct](s"products/$productId", QueryConfig.default, data: _*)
+    stripe.post[StripeProduct](s"products/$productId", QueryConfig.default, data*)
   }
 
   def delete(productId: String): Future[Either[ResponseError, Deleted]] = {
@@ -103,6 +103,6 @@ class ProductsSupport(stripe: Stripe) extends Implicits {
       write("type", `type`),
       write("url", url)
     ).flatten
-    stripe.get[StripeList[StripeProduct]]("products", config, data: _*)
+    stripe.get[StripeList[StripeProduct]]("products", config, data*)
   }
 }

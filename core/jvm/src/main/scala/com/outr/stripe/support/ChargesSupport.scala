@@ -32,7 +32,7 @@ class ChargesSupport(stripe: Stripe) extends Implicits {
       write("source", source),
       write("statement_descriptor", statementDescriptor)
     ).flatten
-    stripe.post[Charge]("charges", QueryConfig.default, data: _*)
+    stripe.post[Charge]("charges", QueryConfig.default, data*)
   }
 
   def byId(chargeId: String): Future[Either[ResponseError, Charge]] = {
@@ -52,7 +52,7 @@ class ChargesSupport(stripe: Stripe) extends Implicits {
       write("receipt_email", receiptEmail),
       write("shipping", shipping)
     ).flatten
-    stripe.post[Charge](s"charges/$chargeId", QueryConfig.default, data: _*)
+    stripe.post[Charge](s"charges/$chargeId", QueryConfig.default, data*)
   }
 
   def capture(chargeId: String,
@@ -66,7 +66,7 @@ class ChargesSupport(stripe: Stripe) extends Implicits {
       write("receipt_email", receiptEmail),
       write("statement_descriptor", statementDescriptor)
     ).flatten
-    stripe.post[Charge](s"charges/$chargeId/capture", QueryConfig.default, data: _*)
+    stripe.post[Charge](s"charges/$chargeId/capture", QueryConfig.default, data*)
   }
 
   def list(created: Option[TimestampFilter] = None,
@@ -78,6 +78,6 @@ class ChargesSupport(stripe: Stripe) extends Implicits {
       write("customer", customer),
       write("source", source)
     ).flatten
-    stripe.get[StripeList[Charge]]("charges", config, data: _*)
+    stripe.get[StripeList[Charge]]("charges", config, data*)
   }
 }

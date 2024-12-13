@@ -28,7 +28,7 @@ class AccountsSupport(stripe: Stripe) extends Implicits {
       write("legal_entity", legalEntity),
       write("tos_acceptance", tosAcceptance)
     ).flatten
-    stripe.post[Account]("accounts", QueryConfig.default, data: _*)
+    stripe.post[Account]("accounts", QueryConfig.default, data*)
   }
 
   def byId(accountId: String): Future[Either[ResponseError, Account]] = {
@@ -76,7 +76,7 @@ class AccountsSupport(stripe: Stripe) extends Implicits {
       write("transfer_schedule", transferSchedule),
       write("transfer_statement_descriptor", transferStatementDescriptor)
     ).flatten
-    stripe.post[Account](s"accounts/$accountId", QueryConfig.default, data: _*)
+    stripe.post[Account](s"accounts/$accountId", QueryConfig.default, data*)
   }
 
   def delete(accountId: String): Future[Either[ResponseError, Deleted]] = {

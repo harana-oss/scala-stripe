@@ -13,7 +13,7 @@ class ApplicationFeeRefundsSupport(stripe: Stripe) extends Implicits {
       write("amount", amount),
       write("metadata", metadata)
     ).flatten
-    stripe.post[FeeRefund](s"application_fees/$feeId/refunds", QueryConfig.default, data: _*)
+    stripe.post[FeeRefund](s"application_fees/$feeId/refunds", QueryConfig.default, data*)
   }
 
   def byId(feeId: String, refundId: String): Future[Either[ResponseError, FeeRefund]] = {
@@ -24,7 +24,7 @@ class ApplicationFeeRefundsSupport(stripe: Stripe) extends Implicits {
     val data = List(
       write("metadata", metadata)
     ).flatten
-    stripe.post[FeeRefund](s"application_fees/$feeId/refunds/$refundId", QueryConfig.default, data: _*)
+    stripe.post[FeeRefund](s"application_fees/$feeId/refunds/$refundId", QueryConfig.default, data*)
   }
 
   def list(feeId: String, config: QueryConfig = QueryConfig.default): Future[Either[ResponseError, StripeList[FeeRefund]]] = {

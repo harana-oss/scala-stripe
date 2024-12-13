@@ -17,7 +17,7 @@ class TransferReversalsSupport(stripe: Stripe) extends Implicits {
       write("metadata", metadata),
       write("refund_application_fee", if (refundApplicationFee) Some(refundApplicationFee) else None)
     ).flatten
-    stripe.post[TransferReversal](s"transfers/$transferId/reversals", QueryConfig.default, data: _*)
+    stripe.post[TransferReversal](s"transfers/$transferId/reversals", QueryConfig.default, data*)
   }
 
   def byId(transferId: String, transferReversalId: String): Future[Either[ResponseError, TransferReversal]] = {
@@ -32,7 +32,7 @@ class TransferReversalsSupport(stripe: Stripe) extends Implicits {
       write("description", description),
       write("metadata", metadata)
     ).flatten
-    stripe.post[TransferReversal](s"transfers/$transferId/reversals/$transferReversalId", QueryConfig.default, data: _*)
+    stripe.post[TransferReversal](s"transfers/$transferId/reversals/$transferReversalId", QueryConfig.default, data*)
   }
 
   def list(transferId: String,

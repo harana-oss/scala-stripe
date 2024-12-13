@@ -29,6 +29,6 @@ class BalanceSupport(stripe: Stripe) extends Implicits {
       write("transfer", transfer),
       write("type", `type`)
     ).flatten
-    stripe.get[StripeList[BalanceTransaction]]("balance/history", config, data: _*)
+    stripe.get[StripeList[BalanceTransaction]]("balance/history", config, data*)
   }
 }

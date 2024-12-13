@@ -2,7 +2,7 @@ package com.outr.stripe
 
 import com.outr.stripe.balance.{Balance, BalanceEntry, BalanceTransaction, FeeDetail, Reversal, SourceType}
 import com.outr.stripe.charge.{Address, BankAccount, Card, Charge, FraudDetails, Outcome, PII, Rule, Shipping}
-import com.outr.stripe.connect.{Acceptance, Account, AccountVerification, AddressKana, AddressKanji, ApplicationFee, CountrySpec, Date, DeclineChargeOn, FeeRefund, Keys, LegalEntity, TransferSchedule, Verification, VerificationFields}
+import com.outr.stripe.connect.{Acceptance, Account, AccountVerification, AddressKana, AddressKanji, ApplicationFee, CountrySpec, Date, DeclineChargeOn, FeeRefund, Keys, LegalEntity, TransferSchedule, Verification, VerificationFieldInstance, VerificationFields}
 import com.outr.stripe.customer.{Customer, Discount}
 import com.outr.stripe.dispute.{Dispute, DisputeEvidence, EvidenceDetails}
 import com.outr.stripe.event.{Event, EventData}
@@ -10,13 +10,12 @@ import com.outr.stripe.price.{Price, Recurring, Tier, TransformQuantity}
 import com.outr.stripe.product.PackageDimensions
 import com.outr.stripe.product.{Product => StripeProduct}
 import com.outr.stripe.refund.Refund
-import com.outr.stripe.subscription.{BillingThresholds, Coupon, CreateSubscriptionItem, Invoice, InvoiceItem, InvoiceLine, Plan, Subscription, SubscriptionItem}
+import com.outr.stripe.subscription.{BillingThresholds, Coupon, CreateSubscriptionItem, Invoice, InvoiceItem, InvoiceLine, Period, Plan, Subscription, SubscriptionItem}
 import com.outr.stripe.token.Token
 import com.outr.stripe.transfer.{SourcedTransfers, Transfer, TransferReversal}
 import io.circe.Decoder.Result
 import io.circe._
 import io.circe.generic.semiauto._
-import io.circe.generic.auto._
 
 trait Implicits {
   // Decoders
@@ -27,6 +26,14 @@ trait Implicits {
       case Right(l) => Right(Money(l))
     }
   }
+  protected implicit val transformQuantityDecoder: Decoder[TransformQuantity] = deriveDecoder[TransformQuantity]
+  protected implicit val verificationDecoder: Decoder[Verification] = deriveDecoder[Verification]
+  protected implicit val verificationFieldInstanceDecoder: Decoder[VerificationFieldInstance] = deriveDecoder[VerificationFieldInstance]
+  protected implicit val addressKanaDecoder: Decoder[AddressKana] = deriveDecoder[AddressKana]
+  protected implicit val addressKanjiDecoder: Decoder[AddressKanji] = deriveDecoder[AddressKanji]
+  protected implicit val dateDecoder: Decoder[Date] = deriveDecoder[Date]
+  protected implicit val periodDecoder: Decoder[Period] = deriveDecoder[Period]
+  protected implicit val recurringDecoder: Decoder[Recurring] = deriveDecoder[Recurring]
   protected implicit val transferDecoder: Decoder[Transfer] = deriveDecoder[Transfer]
   protected implicit val reversalListDecoder: Decoder[StripeList[Reversal]] = deriveDecoder[StripeList[Reversal]]
   protected implicit val balanceDecoder: Decoder[Balance] = deriveDecoder[Balance]

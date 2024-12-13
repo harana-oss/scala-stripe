@@ -17,7 +17,7 @@ class TokensSupport(stripe: Stripe) extends Implicits {
       write("pii", pii),
       write("customer", customerId)
     ).flatten
-    stripe.post[Token]("tokens", QueryConfig.default, data: _*)
+    stripe.post[Token]("tokens", QueryConfig.default, data*)
   }
 
   def byId(tokenId: String): Future[Either[ResponseError, Token]] = {

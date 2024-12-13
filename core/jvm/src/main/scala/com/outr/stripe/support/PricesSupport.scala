@@ -34,7 +34,7 @@ class PricesSupport(stripe: Stripe) extends Implicits {
       write("unit_amount", unitAmount),
       write("unit_amount_decimal", unitAmountDecimal)
     ).flatten
-    stripe.post[Price]("prices", QueryConfig.default, data: _*)
+    stripe.post[Price]("prices", QueryConfig.default, data*)
   }
 
   def byId(priceId: String): Future[Either[ResponseError, Price]] = {
@@ -54,7 +54,7 @@ class PricesSupport(stripe: Stripe) extends Implicits {
       write("nickname", nickname),
       write("transfer_lookup_key", transferLookupKey)
     ).flatten
-    stripe.post[Price](s"prices/$priceId", QueryConfig.default, data: _*)
+    stripe.post[Price](s"prices/$priceId", QueryConfig.default, data*)
   }
 
   def delete(priceId: String): Future[Either[ResponseError, Deleted]] = {
@@ -78,6 +78,6 @@ class PricesSupport(stripe: Stripe) extends Implicits {
       write("product", productId),
       write("type", `type`)
     ).flatten
-    stripe.get[StripeList[Price]]("prices", config, data: _*)
+    stripe.get[StripeList[Price]]("prices", config, data*)
   }
 }

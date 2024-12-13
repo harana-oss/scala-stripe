@@ -39,7 +39,7 @@ class CustomersSupport(stripe: Stripe) extends Implicits {
       write("source", source),
       write("taxExempt", taxExempt)
     ).flatten
-    stripe.post[Customer]("customers", QueryConfig.default, data: _*)
+    stripe.post[Customer]("customers", QueryConfig.default, data*)
   }
 
   def byId(customerId: String): Future[Either[ResponseError, Customer]] = {
@@ -78,7 +78,7 @@ class CustomersSupport(stripe: Stripe) extends Implicits {
       write("source", source),
       write("tax_exempt", taxExempt)
     ).flatten
-    stripe.post[Customer](s"customers/$customerId", QueryConfig.default, data: _*)
+    stripe.post[Customer](s"customers/$customerId", QueryConfig.default, data*)
   }
 
   def delete(customerId: String): Future[Either[ResponseError, Deleted]] = {
@@ -92,7 +92,7 @@ class CustomersSupport(stripe: Stripe) extends Implicits {
       write("created", created),
       write("email", email)
     ).flatten
-    stripe.get[StripeList[Customer]]("customers", config, data: _*)
+    stripe.get[StripeList[Customer]]("customers", config, data*)
   }
 
   object sources {

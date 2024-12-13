@@ -19,6 +19,6 @@ class EventsSupport(stripe: Stripe) extends Implicits {
       write("type", `type`),
       write("types", types)
     ).flatten
-    stripe.get[StripeList[Event]]("events", config, data: _*)
+    stripe.get[StripeList[Event]]("events", config, data*)
   }
 }

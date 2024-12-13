@@ -22,7 +22,7 @@ class InvoicesSupport(stripe: Stripe) extends Implicits {
       write("subscription", subscription),
       write("tax_percent", taxPercent)
     ).flatten
-    stripe.post[Invoice]("invoices", QueryConfig.default, data: _*)
+    stripe.post[Invoice]("invoices", QueryConfig.default, data*)
   }
 
   def byId(invoiceId: String): Future[Either[ResponseError, Invoice]] = {
@@ -49,7 +49,7 @@ class InvoicesSupport(stripe: Stripe) extends Implicits {
       write("subscription_quantity", subscriptionQuantity),
       write("subscription_trial_end", subscriptionTrialEnd)
     ).flatten
-    stripe.get[StripeList[InvoiceLine]](s"invoices/$invoiceId/lines", config, data: _*)
+    stripe.get[StripeList[InvoiceLine]](s"invoices/$invoiceId/lines", config, data*)
   }
 
   def upcoming(customerId: String,
@@ -70,7 +70,7 @@ class InvoicesSupport(stripe: Stripe) extends Implicits {
       write("subscription_quantity", subscriptionQuantity),
       write("subscription_trial_end", subscriptionTrialEnd)
     ).flatten
-    stripe.get[Invoice](s"invoices/upcoming", QueryConfig.default, data: _*)
+    stripe.get[Invoice](s"invoices/upcoming", QueryConfig.default, data*)
   }
 
   def update(invoiceId: String,
@@ -90,7 +90,7 @@ class InvoicesSupport(stripe: Stripe) extends Implicits {
       write("statement_descriptor", statementDescriptor),
       write("tax_percent", taxPercent)
     ).flatten
-    stripe.post[Invoice](s"invoices/$invoiceId", QueryConfig.default, data: _*)
+    stripe.post[Invoice](s"invoices/$invoiceId", QueryConfig.default, data*)
   }
 
   def pay(invoiceId: String): Future[Either[ResponseError, Invoice]] = {
@@ -103,6 +103,6 @@ class InvoicesSupport(stripe: Stripe) extends Implicits {
     val data = List(
       write("date", date)
     ).flatten
-    stripe.get[StripeList[Invoice]]("invoices", config, data: _*)
+    stripe.get[StripeList[Invoice]]("invoices", config, data*)
   }
 }

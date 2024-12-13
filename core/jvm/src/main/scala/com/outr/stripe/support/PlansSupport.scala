@@ -26,7 +26,7 @@ class PlansSupport(stripe: Stripe) extends Implicits {
       write("trial_period_days", trialPeriodDays),
       write("nickname", nickname)
     ).flatten
-    stripe.post[Plan]("plans", QueryConfig.default, data: _*)
+    stripe.post[Plan]("plans", QueryConfig.default, data*)
   }
 
   def byId(planId: String): Future[Either[ResponseError, Plan]] = {
@@ -46,7 +46,7 @@ class PlansSupport(stripe: Stripe) extends Implicits {
       write("statement_descriptor", statementDescriptor),
       write("trial_period_days", trialPeriodDays)
     ).flatten
-    stripe.post[Plan](s"plans/$planId", QueryConfig.default, data: _*)
+    stripe.post[Plan](s"plans/$planId", QueryConfig.default, data*)
   }
 
   def delete(planId: String): Future[Either[ResponseError, Deleted]] = {
@@ -62,6 +62,6 @@ class PlansSupport(stripe: Stripe) extends Implicits {
       write("created", created),
       write("product", productId)
     ).flatten
-    stripe.get[StripeList[Plan]]("plans", config, data: _*)
+    stripe.get[StripeList[Plan]]("plans", config, data*)
   }
 }

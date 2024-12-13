@@ -24,7 +24,7 @@ class InvoiceItemsSupport(stripe: Stripe) extends Implicits {
       write("metadata", metadata),
       write("subscription", subscription)
     ).flatten
-    stripe.post[InvoiceItem]("invoiceitems", QueryConfig.default, data: _*)
+    stripe.post[InvoiceItem]("invoiceitems", QueryConfig.default, data*)
   }
 
   def byId(invoiceItemId: String): Future[Either[ResponseError, InvoiceItem]] = {
@@ -42,7 +42,7 @@ class InvoiceItemsSupport(stripe: Stripe) extends Implicits {
       write("discountable", discountable),
       write("metadata", metadata)
     ).flatten
-    stripe.post[InvoiceItem](s"invoiceitems/$invoiceItemId", QueryConfig.default, data: _*)
+    stripe.post[InvoiceItem](s"invoiceitems/$invoiceItemId", QueryConfig.default, data*)
   }
 
   def delete(invoiceItemId: String): Future[Either[ResponseError, Deleted]] = {
