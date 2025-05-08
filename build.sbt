@@ -3,8 +3,8 @@ import sbtcrossproject.CrossPlugin.autoImport.crossProject
 val commonSettings = Seq(
   name := "scala-stripe",
   organization := "com.outr",
-  version := "1.1.31",
-  scalaVersion := "3.6.2",
+  version := "1.1.32",
+  scalaVersion := "3.7.0",
   scalacOptions ++= Seq("-Xmax-inlines", "128"),
   resolvers += Resolver.sonatypeRepo("releases"),
 
@@ -39,22 +39,22 @@ lazy val core = crossProject(JVMPlatform, JSPlatform).in(file("core"))
   .settings(
     commonSettings,
     libraryDependencies ++= Seq(
-      "io.circe" %%% "circe-core" % "0.14.10",
-      "io.circe" %%% "circe-generic" % "0.14.10",
-      "io.circe" %%% "circe-parser" % "0.14.10",
-      "org.scalactic" %%% "scalactic" % "3.2.19",
-      "org.scalatest" %%% "scalatest" % "3.2.19" % "test",
-      "org.scalatest" %% "scalatest-wordspec" % "3.2.19" % "test",
-      "org.scalatest" %%% "scalatest-matchers-core" % "3.2.19" % "test",
-      "com.outr" %%% "profig" % "3.4.16" % "test"
+      "io.circe"        %%%   "circe-core"                % "0.14.13",
+      "io.circe"        %%%   "circe-generic"             % "0.14.13",
+      "io.circe"        %%%   "circe-parser"              % "0.14.13",
+      "org.scalactic"   %%%   "scalactic"                 % "3.2.19",
+      "org.scalatest"   %%%   "scalatest"                 % "3.2.19" % "test",
+      "org.scalatest"   %%    "scalatest-wordspec"        % "3.2.19" % "test",
+      "org.scalatest"   %%%   "scalatest-matchers-core"   % "3.2.19" % "test",
+      "com.outr"        %%%   "profig"                    % "3.4.18" % "test"
     )
   )
   .jvmSettings(
     commonSettings,
     fork := true,
     libraryDependencies ++= Seq(
-      "com.softwaremill.sttp.client3" %% "core" % "3.10.1",
-      "com.softwaremill.sttp.client3" %% "circe" % "3.10.1"
+      "com.softwaremill.sttp.client4" %% "core" % "4.0.3",
+      "com.softwaremill.sttp.client4" %% "circe" % "4.0.3"
     )
   )
   .jsSettings(

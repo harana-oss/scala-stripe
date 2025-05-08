@@ -1,8 +1,9 @@
 package com.outr.stripe
 
 import io.circe.Decoder
-import sttp.client3._
-import sttp.client3.circe._
+import sttp.client4.*
+import sttp.client4.circe.*
+import sttp.client4.httpclient.HttpClientFutureBackend
 import sttp.model.{Header, HeaderNames, Method, StatusCode, Uri}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -34,7 +35,7 @@ trait Restful extends Implicits {
   private[stripe] def delete[R](endPoint: String,
                                 config: QueryConfig,
                                 data: (String, String)*)
-                               (implicit decoder: Decoder[R], classTag: ClassTag[R]): Future[Either[ResponseError, R]] = {
+                               (implicit decoder: Decoder[R], ct: ClassTag[R]): Future[Either[ResponseError, R]] = {
     process[R](Method.DELETE, endPoint = endPoint, config = config, data = data)
   }
 
@@ -42,7 +43,7 @@ trait Restful extends Implicits {
                                  endPoint: String,
                                  config: QueryConfig,
                                  data: Seq[(String, String)])
-                                (implicit decoder: Decoder[R], classTag: ClassTag[R]): Future[Either[ResponseError, R]] = {
+                                (implicit decoder: Decoder[R], ct: ClassTag[R]): Future[Either[ResponseError, R]] = {
 
     val headers = List(
       Header("Stripe-Version", Stripe.Version),
@@ -62,9 +63,9 @@ trait Restful extends Implicits {
     val request = method match {
       case Method.POST =>
         basicRequest
-          .headers(headers*)
-          .body(queryParams)
-          .post(baseUri)
+        .headers(headers*)
+        .body(queryParams, "utf-8")
+        .post(baseUri)
       case _ =>
         basicRequest
           .headers(headers*)

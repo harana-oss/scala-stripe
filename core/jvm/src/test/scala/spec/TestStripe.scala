@@ -3,12 +3,13 @@ package spec
 import java.nio.file.Paths
 import com.outr.stripe.Stripe
 import profig.Profig
+import fabric.rw.stringRW
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object TestStripe {
   private lazy val stripe: Stripe = {
-    Profig.initConfigurationBlocking(startPath = Paths.get("../.."))
+    Profig.initConfiguration(startPath = Paths.get("../.."))
     val p = Profig("stripe.apiKey")
     val apiKey = if (p.exists()) {
       p.as[String]
